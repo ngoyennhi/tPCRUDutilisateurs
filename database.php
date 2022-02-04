@@ -2,7 +2,15 @@
 et 
 qui contient les informations de connexion à notre base de donnée .
 On instancie l’objet PDO qui nous permet le lien à la base. -->
-
+<!-- /**
+ * Database
+ * Connexion à la base de données
+ *
+ * Liste des fonctions
+ *  - __construct
+ *  - connect
+ *  - disconnect
+ */ -->
 <?php
 class Database
 {   //nom de la base de donnees
@@ -10,14 +18,16 @@ class Database
 
     private static $dbHost = 'localhost';
     private static $dbUsername = 'root';
-    private static $dbUserPasseword = "root";
+    private static $dbUserPassword = "root";
     private static $cont = null;
 
-    public function __construct()
-    {
-        die('Init function is not allowed');
-    }
-    public function connect()
+    // on n'a pas besoin cette function __construct()
+    // public function __construct()
+    // {
+    //     die('Init function is not allowed');
+    // }
+
+    public static function connect()
     {
         if (null == self::$cont) {
             try {
@@ -40,6 +50,15 @@ class Database
         }
         return self::$cont;
     }
+    public static function query()
+    {
+       self::query( 
+                string $statement,
+                int $fetch_style = PDO::FETCH_ASSOS,
+                string $classname ,
+                array $ctorargs ) : PDOStatement;
+    }
+
     public static function disconnect()
     {
         self::$cont = null;
