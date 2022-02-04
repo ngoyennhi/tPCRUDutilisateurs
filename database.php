@@ -5,11 +5,12 @@ On instancie l’objet PDO qui nous permet le lien à la base. -->
 
 <?php
 class Database
-{
+{   //nom de la base de donnees
     private static $dbName = 'testphp';
+
     private static $dbHost = 'localhost';
     private static $dbUsername = 'root';
-    private static $dbUserPasseword = '';
+    private static $dbUserPasseword = "root";
     private static $cont = null;
 
     public function __construct()
@@ -29,7 +30,11 @@ class Database
                     self::$dbUsername,
                     self::$dbUserPassword
                 );
+                  // set the PDO error mode to exception
+                  self::$cont->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    echo "Connected successfully";
             } catch (PDOException $e) {
+                echo "Connection failed: ";
                 die($e->getMessage());
             }
         }
