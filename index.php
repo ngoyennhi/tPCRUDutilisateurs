@@ -36,33 +36,45 @@
           <th>Edition</th>
         </thead>
         <tbody>
-        <?php include 'database.php'; 
-        //on inclut notre fichier de connection 
+        <?php
+        include 'database.php';
+        
+        //on inclut notre fichier de connection
         $pdo = new Database();
-        $pdo->connect(); 
-        //on se connecte à la base 
-        $sql = 'SELECT * FROM user ORDER BY id DESC'; 
-        //on formule notre requete 
-        foreach ($pdo->query($sql) as $row) { 
-          //on cree les lignes du tableau avec chaque valeur retournée 
-          echo '<tr>';
-          echo '<td>'.$row['name'].'</td>';
-          echo '<td>'.$row['firstname'].'</td>';
-          echo '<td>'.$row['age'].'</td>';
-          echo '<td>'.$row['tel'].'</td>';
-          echo '<td>'.$row['email'].'</td>';
-          echo '<td>'.$row['pays'].'</td>';
-          echo '<td>'.$row['comment'].'</td>';
-          echo '<td>'.$row['metier'].'</td>';
-          echo '<td>'.$row['url'].'</td>';
-          // un autre td pour le bouton d'edition
-          echo '<td>'.'<a class="btn" href="edit.php?id='.$row['id'].'">Read</a>';
-          // un autre td pour le bouton d'update
-          echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Update</a>';
-          // un autre td pour le bouton de suppression
-          echo '<a class="btn btn-danger" href="delete.php?id=' . $row['id'] . ' ">Delete</a>';}
+        $pdo->connect();
+        //on se connecte à la base
+        $sql = 'SELECT * FROM user ORDER BY id DESC';
+        $users = $pdo->queryBDD($sql);
+        // //resultat est un tableau ( array )
+        // var_dump($users);
+        //on formule notre requete
+        foreach ($users as $row) {
+            //on cree les lignes du tableau avec chaque valeur retournée
+            echo '<tr>';
+            echo '<td>' . $row['Name'] . '</td>';
+            echo '<td>' . $row['Firstname'] . '</td>';
+            echo '<td>' . $row['Age'] . '</td>';
+            echo '<td>' . $row['Tel'] . '</td>';
+            echo '<td>' . $row['Email'] . '</td>';
+            echo '<td>' . $row['Pays'] . '</td>';
+            echo '<td>' . $row['Comment'] . '</td>';
+            echo '<td>' . $row['Metier'] . '</td>';
+            echo '<td>' . $row['Url'] . '</td>';
+            // un autre td pour le bouton d'edition
+            echo '<td>' .
+                '<a class="btn btn-primary" href="edit.php?id='.$row['id'].
+                '">Read</a>';
+            // un autre td pour le bouton d'update
+            echo '<a class="btn btn-success" href="update.php?id=' .
+                $row['id'] .
+                '">Update</a>';
+            // un autre td pour le bouton de suppression
+            echo '<a class="btn btn-danger" href="delete.php?id=' .
+                $row['id'] .
+                ' ">Delete</a>';
+        }
 
-          $pdo->disconnect();
+        $pdo->disconnect();
         ?>
         </tbody>
       </table>

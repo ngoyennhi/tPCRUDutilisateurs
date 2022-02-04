@@ -36,7 +36,7 @@ class Database
                         self::$dbHost .
                         ';' .
                         'dbname=' .
-                        self::$dbName,
+                    self::$dbName,
                     self::$dbUsername,
                     self::$dbUserPassword
                 );
@@ -50,13 +50,22 @@ class Database
         }
         return self::$cont;
     }
-    public static function query()
+
+    public function queryBDD(string $sql)
     {
-       self::query( 
-                string $statement,
-                int $fetch_style = PDO::FETCH_ASSOS,
-                string $classname ,
-                array $ctorargs ) : PDOStatement;
+        $user = '';
+        if (null !== self::$cont) {
+            try {   
+                  // set the PDO error mode to exception
+                  $sth = self::$cont->prepare($sql);
+                  $sth->execute();
+                  $user = $sth->fetchAll();
+            } catch (PDOException $e) {
+                echo "Fetch failed: ";
+                die($e->getMessage());
+            }
+        }
+        return $user;
     }
 
     public static function disconnect()
