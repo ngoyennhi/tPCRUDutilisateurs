@@ -7,7 +7,6 @@ On instancie l’objet PDO qui nous permet le lien à la base. -->
  * Connexion à la base de données
  *
  * Liste des fonctions
- *  - __construct
  *  - connect
  *  - disconnect
  */ -->
